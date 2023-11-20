@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_ARCS 100
+
+typedef struct {
+    int start;
+    int end;
+} Arc;
+
+void readGraph(const char *filename, Arc *arcs, int *numArcs) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+
+    *numArcs = 0;
+
+    while (*numArcs < MAX_ARCS && fscanf(file, "%d %d", &arcs[*numArcs].start, &arcs[*numArcs].end) == 2) {
+        (*numArcs)++;
+    }
+
+    fclose(file);
+}
+
+
+int main() {
+    const char *filename = "precedence.txt";  
+    Arc arcs[MAX_ARCS];
+    int numArcs;
+
+    readGraph(filename, arcs, &numArcs);
+
+    printf("Number of arcs: %d\n", numArcs);
+    printf("Arcs:\n");
+
+    for (int i = 0; i < numArcs; i++) {
+        printf("(%d, %d)\n", arcs[i].start, arcs[i].end);
+    }
+
+    return 0;
+}

@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+// Nouvelle structure pour stocker les groupes
+typedef struct {
+    float totalTime;
+    int* vertices;
+    int numVertices;
+} Group;
 // Structure pour un sommet
 typedef struct Node {
     int vertex;
@@ -109,25 +114,92 @@ void printGraph(Graph* graph) {
         printf("\n");
     }
 }
+// Fonction pour effectuer un tri topologique sur le graphe
+void topologicalSortUtil(Graph* graph, int v, bool visited[], int stack[], int* stackIndex) {
+    // Marquer le sommet actuel comme visité
+    visited[v] = true;
 
+    // Récurse pour tous les sommets adjacents à ce sommet
+    Node* temp = graph->array[v].head;
+    while (temp) {
+        if (!visited[temp->vertex]) {
+            topologicalSortUtil(graph, temp->vertex, visited, stack, stackIndex);
+        }
+        temp = temp->next;
+    }
+
+    // Pousser le sommet actuel dans la pile qui stocke le résultat
+    stack[(*stackIndex)++] = v;
+}
+
+// La fonction qui fait le tri topologique et retourne une pile avec l'ordre des sommets
+int* topologicalSort(Graph* graph) {
+    int* stack = (int*) malloc(graph->numVertices * sizeof(int));
+    bool* visited = (bool*) calloc(graph->numVertices, sizeof(bool));
+    int stackIndex = 0;
+
+    // Appeler la fonction auxiliaire récursive pour stocker le tri topologique
+    // en commençant par tous les sommets un par un
+    for (int i = 0; i < graph->numVertices; i++) {
+        if (!visited[i]) {
+            topologicalSortUtil(graph, i, visited, stack, &stackIndex);
+        }
+    }
+
+    free(visited);
+    return stack; // La pile contient l'ordre des sommets en tri topologique
+}
+
+// Fonction pour grouper les sommets
+Group* groupVertices(Graph* graph, int* numGroups) {
+    int* order = topologicalSort(graph);
+    Group* groups = (Group*) calloc(graph->numVertices, sizeof(Group));
+    *numGroups = 0;
+
+    for (int i = 0; i < graph->numVertices; i++) {
+        int vertex = order[i];
+        float time = graph->array[vertex].head ? graph->array[vertex].head->time : 0;
+        bool placed = false;
+
+        for (int j = 0; j <= *numGroups; j++) {
+            if (groups[j].totalTime + time <= 1) {
+                groups[j].totalTime += time;
+                groups[j].vertices = realloc(groups[j].vertices, (groups[j].numVertices + 1) * sizeof(int));
+                groups[j].vertices[groups[j].numVertices++] = vertex;
+                placed = true;
+                break;
+            }
+        }
+
+        if (!placed) {
+            groups[++(*numGroups)].totalTime += time;
+            groups[*numGroups].vertices = (int*) malloc(sizeof(int));
+            groups[*numGroups].vertices[0] = vertex;
+            groups[*numGroups].numVertices = 1;
+        }
+    }
+
+    free(order);
+    return groups;
+}
 // Fonction principale
 int main() {
-    printf("Début du programme.\n"); // Débogage
+    printf("Début du programme.\n");
 
     char fileEdges[] = "arrete.txt";
     char fileTimes[] = "temps2.txt";
 
     int totalVertices = findTotalVertices(fileEdges);
-    printf("Nombre total de sommets trouvé : %d\n", totalVertices); // Débogage
+    printf("Nombre total de sommets trouvé : %d\n", totalVertices);
 
     if (totalVertices == -1) {
         return 1; // Erreur lors de la lecture du fichier
     }
 
-    Graph *graph = createGraph(totalVertices); // Pas besoin de +1 si on commence à 0
+    Graph* graph = createGraph(totalVertices);
 
     // Lire le fichier des arêtes et ajouter des arêtes
-    FILE *file = fopen(fileEdges, "r");
+    FILE* file = fopen(fileEdges, "r");
     int src, dest;
 
     if (!file) {
@@ -143,8 +215,22 @@ int main() {
     // Ajouter les temps aux sommets
     addTimesToGraph(graph, fileTimes);
 
-    printGraph(graph); // Affiche la liste d'adjacence et les temps
+    // Grouper les sommets en respectant les contraintes
+    int numGroups;
+    Group* groups = groupVertices(graph, &numGroups);
 
-    printf("Fin du programme.\n"); // Débogage
+    // Affichage des groupes
+    for (int i = 0; i <= numGroups; i++) {
+        printf("Groupe %d (Temps total: %0.2f): ", i, groups[i].totalTime);
+        for (int j = 0; j < groups[i].numVertices; j++) {
+            printf("%d ", groups[i].vertices[j]);
+        }
+        printf("\n");
+        free(groups[i].vertices);
+    }
+
+    free(groups);
+
+    printf("Fin du programme.\n");
     return 0;
 }

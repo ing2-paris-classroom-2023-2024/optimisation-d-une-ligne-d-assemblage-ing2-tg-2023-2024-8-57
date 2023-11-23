@@ -54,6 +54,7 @@ station* CreerStations(int n, int ordre) {
                 station* temp = tete;
                 tete = tete->next;
                 free(temp->all_tache);
+                free(temp->exclusion);
                 free(temp);
             }
             return NULL; // Retournez NULL en cas d'erreur
@@ -62,15 +63,22 @@ station* CreerStations(int n, int ordre) {
         // Allouez le tableau de nombres avec la taille de l'ordre du graphe
         nouvelle_station->all_tache = (int*)malloc(ordre * sizeof(int));
 
+        // Allouez la matrice d'exclusion de taille ordre x ordre
+        nouvelle_station->exclusion = (int**)malloc(ordre * sizeof(int*));
+        for (int j = 0; j < ordre; j++) {
+            nouvelle_station->exclusion[j] = (int*)malloc(ordre * sizeof(int));
+        }
+
         // Vérifiez si l'allocation de mémoire a réussi
-        if (nouvelle_station->all_tache == NULL) {
+        if (nouvelle_station->all_tache == NULL || nouvelle_station->exclusion == NULL) {
             // Gestion de l'erreur ici
-            printf("Erreur d'allocation de mémoire pour le tableau de la station %d\n", i);
+            printf("Erreur d'allocation de mémoire pour la station %d\n", i);
             // Libérez la mémoire précédemment allouée
             while (tete != NULL) {
                 station* temp = tete;
                 tete = tete->next;
                 free(temp->all_tache);
+                free(temp->exclusion);
                 free(temp);
             }
             return NULL; // Retournez NULL en cas d'erreur
@@ -79,6 +87,9 @@ station* CreerStations(int n, int ordre) {
         // Initialisez le tableau de nombres à zéro (ou à la valeur par défaut)
         for (int j = 0; j < ordre; j++) {
             nouvelle_station->all_tache[j] = 0; // Initialisez à zéro, vous pouvez changer cela selon vos besoins
+            for (int k = 0; k < ordre; k++) {
+                nouvelle_station->exclusion[j][k] = 0; // Initialisez à zéro
+            }
         }
 
         nouvelle_station->next = NULL; // Initialisez le pointeur suivant à NULL
@@ -94,8 +105,9 @@ station* CreerStations(int n, int ordre) {
         prev = nouvelle_station; // Mettez à jour la station précédente
     }
 
-    return tete;
+    return tete; // Retournez la tête de la liste des stations
 }
+
 
 void AjouterTacheAStation(station* tete_station, int niveau_precedence, int tache) {
     // Parcourez la liste des stations jusqu'à atteindre la station correspondant au niveau de précédence

@@ -168,6 +168,7 @@ int main()
     char nom_fichier[50];
 
     int max_lvl =0;
+    int k =0;
 
    // printf("entrer le nom du fichier du labyrinthe:");
    // gets(nom_fichier);
@@ -178,11 +179,6 @@ int main()
 
     calculerNiveauxDePrecedence(g, niveaux);
 
-    for (int i = 0; i < g->ordre; ++i) {
-
-        printf("%d: %d\n",i,niveaux[i]);
-
-    }
 
     for (int i = 0; i < g->ordre; ++i) {
         if(niveaux[i]>max_lvl){
@@ -190,19 +186,54 @@ int main()
         }
     }
 
+    /*Tache* taches = lire_taches("temps.txt", g->ordre);
+    for (int i = 0; i <g->ordre; ++i) {
+        printf("%d: %f s",i,taches[i].temp);
+    }*/
+
     liste_station = CreerStations(max_lvl+1,g->ordre+1);
-
-    /// afficher le graphe
-    //graphe_afficher(g);
-
 
     for (int i = 0; i <g->ordre ; ++i) {
         AjouterTacheAStation(liste_station,niveaux[i],i);
     }
-    printf("check zebi\n");Q
-    for (int i = 0; i <g->ordre ; ++i) {
-        if(liste_station[2].all_tache[i] ==1)
-            printf("%d\n",i);
+
+    station* current = liste_station;
+
+    while (current != NULL) {
+        // Accédez au maillon actuel ici
+        // Par exemple, current->all_tache vous donne l'ensemble des tâches de la station actuelle
+        charger_exclusions(current,g->ordre,"exclu.txt");
+        // Avancez au maillon suivant
+        current = current->next;
+    }
+
+    current = liste_station;
+
+    while (current != NULL) {
+        printf("station :%d \n",k);
+        for (int i = 0; i < g->ordre; ++i) {
+            if(current->all_tache[i] == 1)
+                printf("%d ",i);
+        }
+        printf("\n");
+        k++;
+        current = current->next;
+    }
+    printf("\n");
+
+    resoudre_conflits(liste_station,g->ordre);
+
+    current = liste_station;
+    k =0;
+    while (current != NULL) {
+        printf("station :%d \n",k);
+        for (int i = 0; i < g->ordre; ++i) {
+            if(current->all_tache[i] == 1)
+                printf("%d ",i);
+        }
+        printf("\n");
+        k++;
+        current = current->next;
     }
 
     return 0;

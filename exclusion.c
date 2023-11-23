@@ -22,10 +22,14 @@ void charger_exclusions(station* stations, int ordre,char* nomFichier) {
 
 // Résoudre les conflits entre les tâches dans toutes les stations // Assurez-vous d'inclure le bon header
 
-void resoudre_conflits(station* stations, int ordre) {
-    int conflit_resolu = 1;  // Indicateur pour vérifier si un conflit a été résolu
+int resoudre_conflits(station* stations, int ordre) {
+    int s =0;
+    int tab[ordre];
+    int conflit_resolu = 0;  // Indicateur pour vérifier si un conflit a été résolu
 
-    while (conflit_resolu) {
+    // Boucle pour continuer à résoudre les conflits jusqu'à ce qu'il n'y en ait plus
+    int modification_effectuee = 0;  // Drapeau pour indiquer si une modification a été faite
+    do {
         conflit_resolu = 0;  // Réinitialise l'indicateur de conflit résolu
 
         // Parcours de toutes les stations
@@ -61,6 +65,7 @@ void resoudre_conflits(station* stations, int ordre) {
                             }
 
                             conflit_resolu = 1;  // Indiquer qu'un conflit a été résolu
+                            modification_effectuee = 1; // Indiquer qu'une modification a été faite
                             break;
                         }
                     }
@@ -68,8 +73,11 @@ void resoudre_conflits(station* stations, int ordre) {
             }
             current_station = current_station->next;
         }
-    }
+    } while (conflit_resolu);
+
+    return modification_effectuee; // Retourne 1 si une modification a été effectuée, sinon 0
 }
+
 
 
 

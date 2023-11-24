@@ -1,0 +1,23 @@
+// Nouvelle structure pour stocker les groupes
+typedef struct {
+    float totalTime;
+    int* vertices;
+    int numVertices;
+} Group;
+// Structure pour un sommet
+typedef struct Node {
+    int vertex;
+    float time;
+    struct Node* next;
+} Node;
+
+// Structure pour la liste d'adjacence
+typedef struct AdjList {
+    Node* head;
+} AdjList;
+
+// Structure pour le graphe
+typedef struct Graph {
+    int numVertices;
+    AdjList* array;
+} Graph;

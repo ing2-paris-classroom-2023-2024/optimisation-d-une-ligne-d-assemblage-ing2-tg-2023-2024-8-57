@@ -6,6 +6,7 @@
 
 typedef struct Station{
     int* all_tache;
+    double* temps_tache;
     int** exclusion;
     struct Station* next;
 }station;
@@ -44,7 +45,7 @@ typedef struct Graphe
 typedef struct tache1
 {
     int num_tache;
-    float temp;
+    double temp;
 }Tache;
 
 // créer le graphe
@@ -67,17 +68,30 @@ void parcoursBFS(Graphe* graphe, int start, int* niveaux);
 
 void calculerNiveauxDePrecedence(Graphe* graphe, int* niveaux);
 
+int taille_nombre(char *filename);
+
+int sommet_nombre(char *filename);
+
+int nombreDescendants(Graphe* G, int tache);
+
+
 /////Station/////////
 
 station* CreerStations(int n, int ordre);
 
 void AjouterTacheAStation(station* tete_station, int niveau_precedence, int tache);
 
+////////precedence/////////
+
+int verifierPrecedence(station** liste_stations, int** precedence, int ordre);
+
+void lirePrecedence( char* nom_fichier, int** precedence, int ordre);
+
 //////////exclusion////////
 
 void charger_exclusions(station* stations, int ordre,char* nomFichier);
 
-void resoudre_conflits(station* stations, int ordre);
+int resoudre_conflits(station* stations, int ordre);
 
 int est_precedente(station* liste_station, int tache1, int tache2);
 
@@ -85,6 +99,8 @@ int est_exclue(station* liste_station, int tache1, int tache2);
 
 //////temps tache/////
 Tache* lire_taches(char* nom_fichier, int n);
+
+int sommeTempsTaches(station** liste_station, int ordre, double k,Graphe* g);
 
 
 #endif // GRAPHE_H_INCLUDED

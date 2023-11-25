@@ -62,6 +62,7 @@ station* CreerStations(int n, int ordre) {
 
         // Allouez le tableau de nombres avec la taille de l'ordre du graphe
         nouvelle_station->all_tache = (int*)malloc(ordre * sizeof(int));
+        nouvelle_station->temps_tache = malloc(ordre * sizeof(double));
 
         // Allouez la matrice d'exclusion de taille ordre x ordre
         nouvelle_station->exclusion = (int**)malloc(ordre * sizeof(int*));

@@ -7,8 +7,6 @@ int main()
     int temp_cycle_max =0;
 
     int max_lvl =0;
-    int k =0;
-
     ///////graphe////////
     g = lire_graphe("graphe.txt");
     int niveaux[g->ordre];
@@ -17,14 +15,20 @@ int main()
     /////////////precedence +temps cycle////////////
     FILE* f = fopen("cycle.txt", "r");
     fscanf(f,"%d",&temp_cycle_max);
-    printf("%d\n",temp_cycle_max);
 
-    int** precedenc_mat = (int**)malloc(g->ordre * sizeof(int*));
+
+    int** precedenc_mat = malloc(g->ordre * sizeof(int*));
     for (int i = 0; i < g->ordre; ++i) {
-        precedenc_mat[i] = malloc(g->ordre * sizeof (int));
+        precedenc_mat[i] = calloc(g->ordre, sizeof (int));
     }
 
     lirePrecedence("graphe.txt",precedenc_mat,g->ordre);
+    for (int i = 0; i < g->ordre; ++i) {
+        for (int j = 0; j < g->ordre; ++j) {
+            printf("%d ",precedenc_mat[i][j]);
+        }
+        printf("\n");
+    }
 
     calculerNiveauxDePrecedence(g, niveaux);
 
@@ -64,12 +68,12 @@ int main()
 
     ////////check condi////////
 
-    while((resoudre_conflits(liste_station,g->ordre)||sommeTempsTaches(&liste_station,g->ordre,temp_cycle_max,g))||(verifierPrecedence(&liste_station,precedenc_mat,g->ordre))){}
+    while(resoudre_conflits(liste_station,g->ordre)||sommeTempsTaches(&liste_station,g->ordre,temp_cycle_max,g)||verifierPrecedence(&liste_station,precedenc_mat,g->ordre)){}
 
     ///////print station///////
 
     current = liste_station;
-    k =0;
+    int k =0;
     while (current != NULL) {
         printf("station :%d \n",k);
         for (int i = 0; i < g->ordre; ++i) {

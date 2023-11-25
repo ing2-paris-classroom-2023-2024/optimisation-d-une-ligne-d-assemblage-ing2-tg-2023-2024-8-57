@@ -2,13 +2,8 @@
 
 void lirePrecedence(char* nom_fichier, int** precedence, int ordre) {
     FILE* fichier = fopen(nom_fichier, "r");
-    if (!fichier) {
-        perror("Erreur lors de l'ouverture du fichier de précédence");
-        exit(EXIT_FAILURE);
-    }
-
     int s1, s2;
-    while (fscanf(fichier, "%d %d", &s1, &s2) == 2) {
+    while (fscanf(fichier,"%d %d", &s1, &s2) == 2) {
         if (s1 >= 0 && s1 < ordre && s2 >= 0 && s2 < ordre) {
             precedence[s1][s2] = 1;
         }

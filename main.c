@@ -15,20 +15,13 @@ int main()
     /////////////precedence +temps cycle////////////
     FILE* f = fopen("cycle.txt", "r");
     fscanf(f,"%d",&temp_cycle_max);
-
-
+    
     int** precedenc_mat = malloc(g->ordre * sizeof(int*));
     for (int i = 0; i < g->ordre; ++i) {
         precedenc_mat[i] = calloc(g->ordre, sizeof (int));
     }
 
     lirePrecedence("graphe.txt",precedenc_mat,g->ordre);
-    for (int i = 0; i < g->ordre; ++i) {
-        for (int j = 0; j < g->ordre; ++j) {
-            printf("%d ",precedenc_mat[i][j]);
-        }
-        printf("\n");
-    }
 
     calculerNiveauxDePrecedence(g, niveaux);
 

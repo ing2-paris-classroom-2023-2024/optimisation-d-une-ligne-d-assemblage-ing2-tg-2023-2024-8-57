@@ -15,7 +15,7 @@ int main()
     /////////////precedence +temps cycle////////////
     FILE* f = fopen("cycle.txt", "r");
     fscanf(f,"%d",&temp_cycle_max);
-    printf("%d\n",temp_cycle_max);
+
 
     int** precedenc_mat = malloc(g->ordre * sizeof(int*));
     for (int i = 0; i < g->ordre; ++i) {

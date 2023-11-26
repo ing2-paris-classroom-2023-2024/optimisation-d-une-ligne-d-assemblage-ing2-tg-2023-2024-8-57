@@ -219,6 +219,15 @@ station* init_station() {
         printf("\n");
     }
 
+    liste_station = CreerStations(numGroups,totalVertices);
+    station* current = liste_station;
+    for (int i = 0; i < numGroups; ++i) {
+        for (int j = 0; j < groups[i].numVertices; ++j) {
+            current->all_tache[groups[i].vertices[j]] = 1;
+        }
+        current =current->next;
+    }
+
 
     // Libération de la mémoire allouée pour le graphe
     for (int i = 0; i < graph->numVertices; i++) {
@@ -228,20 +237,10 @@ station* init_station() {
             free(temp);
         }
     }
-    
+
     free(graph->array);
     free(graph);
 
-    liste_station = CreerStations(numGroups,totalVertices);
-    station* current = liste_station;
-    for (int i = 0; i < numGroups; ++i) {
-        for (int j = 0; j < totalVertices; ++j) {
-            if(groups[i].vertices[j] == j){
-                current->all_tache[j] = groups[i].vertices[j];
-            }
-        }
-        current =current->next;
-    }
     return liste_station;
 
 }

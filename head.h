@@ -31,6 +31,7 @@ typedef struct Graph {
 } Graph;
 
 typedef struct Station{
+    int num_station;
     int* all_tache;
     double* temps_tache;
     int** exclusion;
@@ -101,11 +102,12 @@ int sommet_nombre(char *filename);
 int nombreDescendants(Graphe* G, int tache);
 
 
+
 /////Station/////////
 
 station* CreerStations(int n, int ordre);
 
-void AjouterTacheAStation(station* tete_station, int niveau_precedence, int tache);
+station* ajouterStationFin(station **tete, int ordre);
 
 ////////precedence/////////
 
@@ -135,9 +137,9 @@ station* init_station();
 
 //////////exclusion////////
 
-void charger_exclusions(station* stations, int ordre,char* nomFichier);
+void charger_exclusions(int** exclusion,char* nomFichier);
 
-int resoudre_conflits(station* stations, int ordre);
+int resoudre_conflits(station* stations, int ordre,int** exclusion);
 
 int est_precedente(station* liste_station, int tache1, int tache2);
 

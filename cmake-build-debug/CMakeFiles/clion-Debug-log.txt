@@ -1,4 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57 -B C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57\cmake-build-debug
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/charv/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57/cmake-build-debug

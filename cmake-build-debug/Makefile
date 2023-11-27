@@ -47,19 +47,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2022.3\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe" -E rm -f
+RM = "C:\Program Files\JetBrains\CLion 2022.3\bin\cmake\win\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57
+CMAKE_SOURCE_DIR = C:\Users\charv\CLionProjects\projet_ligne_assembalge
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\charv\CLionProjects\projet_ligne_assembalge\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -67,7 +67,7 @@ CMAKE_BINARY_DIR = C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assem
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+	"C:\Program Files\JetBrains\CLion 2022.3\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -77,7 +77,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	"C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	"C:\Program Files\JetBrains\CLion 2022.3\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57\cmake-build-debug\CMakeFiles C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\charv\CLionProjects\projet_ligne_assembalge\cmake-build-debug\CMakeFiles C:\Users\charv\CLionProjects\projet_ligne_assembalge\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\charv\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-8-57\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\charv\CLionProjects\projet_ligne_assembalge\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -200,6 +200,30 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled26.dir\build.make CMakeFiles/untitled26.dir/main.c.s
 .PHONY : main.c.s
 
+max_precedence.obj: max_precedence.c.obj
+.PHONY : max_precedence.obj
+
+# target to build an object file
+max_precedence.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled26.dir\build.make CMakeFiles/untitled26.dir/max_precedence.c.obj
+.PHONY : max_precedence.c.obj
+
+max_precedence.i: max_precedence.c.i
+.PHONY : max_precedence.i
+
+# target to preprocess a source file
+max_precedence.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled26.dir\build.make CMakeFiles/untitled26.dir/max_precedence.c.i
+.PHONY : max_precedence.c.i
+
+max_precedence.s: max_precedence.c.s
+.PHONY : max_precedence.s
+
+# target to generate assembly for a file
+max_precedence.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled26.dir\build.make CMakeFiles/untitled26.dir/max_precedence.c.s
+.PHONY : max_precedence.c.s
+
 precedence_check.obj: precedence_check.c.obj
 .PHONY : precedence_check.obj
 
@@ -290,6 +314,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... max_precedence.obj
+	@echo ... max_precedence.i
+	@echo ... max_precedence.s
 	@echo ... precedence_check.obj
 	@echo ... precedence_check.i
 	@echo ... precedence_check.s

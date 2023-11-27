@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/untitled26.dir/graphe_creation.c.obj.d"
   "CMakeFiles/untitled26.dir/main.c.obj"
   "CMakeFiles/untitled26.dir/main.c.obj.d"
+  "CMakeFiles/untitled26.dir/max_precedence.c.obj"
+  "CMakeFiles/untitled26.dir/max_precedence.c.obj.d"
   "CMakeFiles/untitled26.dir/precedence_check.c.obj"
   "CMakeFiles/untitled26.dir/precedence_check.c.obj.d"
   "CMakeFiles/untitled26.dir/station.c.obj"

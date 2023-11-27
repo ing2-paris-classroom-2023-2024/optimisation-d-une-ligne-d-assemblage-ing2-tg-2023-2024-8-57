@@ -3,6 +3,32 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "stdbool.h"
+
+#define MAX_TIME 3
+// Nouvelle structure pour stocker les groupes
+typedef struct {
+    float totalTime;
+    int* vertices;
+    int numVertices;
+} Group;
+// Structure pour un sommet
+typedef struct Node {
+    int vertex;
+    float time;
+    struct Node* next;
+} Node;
+
+// Structure pour la liste d'adjacence
+typedef struct AdjList {
+    Node* head;
+} AdjList;
+
+typedef struct Graph {
+    int numVertices;
+    AdjList* array;
+    float* times; // Ajout d'un tableau pour stocker les temps
+} Graph;
 
 typedef struct Station{
     int* all_tache;
@@ -83,9 +109,29 @@ void AjouterTacheAStation(station* tete_station, int niveau_precedence, int tach
 
 ////////precedence/////////
 
+Node* createNode(int vertex, float time);
+
+Graph* createGraph(int vertices);
+
+void addEdge(Graph* graph, int src, int dest);
+
+void printGraph(Graph* graph);
+
+void topologicalSortUtil(Graph* graph, int v, bool visited[], int stack[], int* stackIndex);
+
+int* topologicalSort(Graph* graph);
+
+Group* groupVertices(Graph* graph, int* numGroups,int max_temps);
+
+void addTimesToGraph(Graph* graph, char* filename);
+
+int findTotalVertices(char* filename);
+
 int verifierPrecedence(station** liste_stations, int** precedence, int ordre);
 
 void lirePrecedence( char* nom_fichier, int** precedence, int ordre);
+
+station* init_station();
 
 //////////exclusion////////
 
